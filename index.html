@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerdikids - Belajar Sambil Bermain</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a href="#" class="logo" data-target="home">🎈 Cerdikids</a>
+
+            <div class="star-counter">
+                <svg class="star-icon" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+                <span id="star-count">0</span>
+            </div>
+
+            <button class="btn-secondary" data-target="dashboard" style="font-size: 0.9rem; padding: 0.5rem 1rem;">
+                👨‍👩‍👧 Orang Tua
+            </button>
+        </nav>
+
+        <!-- View: Home -->
+        <section id="view-home" class="view-section active">
+            <header class="hero">
+                <div class="mascot-area">
+                    <!-- Placeholder for mascot image if needed -->
+                    <span style="font-size: 5rem;">🦁</span>
+                </div>
+                <h1>Selamat Datang di Cerdikids!</h1>
+                <p>Ayo bermain sambil belajar mengenal dunia!</p>
+                <div class="fun-text" style="font-size: 1.2rem; color: #555; margin-bottom: 2rem;">
+                    Pilih permainanmu:
+                </div>
+            </header>
+
+            <div class="game-grid">
+                <div class="game-card" data-target="gameLetters">
+                    <span class="game-icon">🔤</span>
+                    <h3>Huruf</h3>
+                    <p>Belajar A-B-C</p>
+                </div>
+                <div class="game-card" data-target="gameNumbers">
+                    <span class="game-icon">1️⃣</span>
+                    <h3>Angka</h3>
+                    <p>Belajar Berhitung</p>
+                </div>
+                <div class="game-card" data-target="gameColors">
+                    <span class="game-icon">🎨</span>
+                    <h3>Warna</h3>
+                    <p>Tebak Warna</p>
+                </div>
+                <div class="game-card" data-target="gameShapes">
+                    <span class="game-icon">🔺</span>
+                    <h3>Bentuk</h3>
+                    <p>Mengenal Bentuk</p>
+                </div>
+                <div class="game-card" data-target="gameMemory">
+                    <span class="game-icon">🧠</span>
+                    <h3>Memori</h3>
+                    <p>Latih Ingatan</p>
+                </div>
+                <!-- New Singing Game -->
+                <div class="game-card" data-target="gameSinging">
+                    <span class="game-icon">🎤</span>
+                    <h3>Menyanyi</h3>
+                    <p>Lagu Ceria</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mascot -->
+        <div id="mascot-container" class="mascot-container" onclick="mascot.playAnimation()">
+            <div class="mascot-bubble" id="mascot-bubble">Halo! Ayo main!</div>
+            <div class="mascot-body">
+                🦁
+            </div>
+        </div>
+
+
+        <!-- View: Games -->
+        <section id="view-game-letters" class="view-section">
+            <div class="game-header">
+                <button class="back-btn" data-target="home">⬅ Kembali</button>
+                <h3>Mengenal Huruf</h3>
+            </div>
+            <div id="gameLetters-container" class="game-container"></div>
+        </section>
+
+        <section id="view-game-numbers" class="view-section">
+            <div class="game-header">
+                <button class="back-btn" data-target="home">⬅ Kembali</button>
+                <h3>Mengenal Angka</h3>
+            </div>
+            <div id="gameNumbers-container" class="game-container"></div>
+        </section>
+
+        <section id="view-game-colors" class="view-section">
+            <div class="game-header">
+                <button class="back-btn" data-target="home">⬅ Kembali</button>
+                <h3>Mengenal Warna</h3>
+            </div>
+            <div id="gameColors-container" class="game-container"></div>
+        </section>
+
+        <section id="view-game-shapes" class="view-section">
+            <div class="game-header">
+                <button class="back-btn" data-target="home">⬅ Kembali</button>
+                <h3>Mengenal Bentuk</h3>
+            </div>
+            <div id="gameShapes-container" class="game-container"></div>
+        </section>
+
+        <section id="view-game-memory" class="view-section">
+            <div class="game-header">
+                <button class="back-btn" data-target="home">⬅ Kembali</button>
+                <h3>Game Memori</h3>
+            </div>
+            <div id="gameMemory-container" class="game-container"></div>
+        </section>
+
+        <section id="view-game-singing" class="view-section">
+            <div class="game-header">
+                <button class="back-btn" data-target="home">⬅ Kembali</button>
+                <h3>Ayo Bernyanyi</h3>
+            </div>
+            <div id="gameSinging-container" class="game-container"></div>
+        </section>
+
+
+        <!-- View: Dashboard -->
+        <section id="view-dashboard" class="view-section">
+            <div class="game-header">
+                <button class="back-btn" data-target="home">⬅ Kembali</button>
+                <h3>Dashboard Orang Tua</h3>
+            </div>
+            <div id="dashboard-content" class="game-container">
+                <!-- Content injected by JS -->
+            </div>
+            <div id="badges-container" class="badges-section">
+                <h3>Koleksi Lencana</h3>
+                <div id="badge-grid" class="badge-grid"></div>
+            </div>
+        </section>
+
+
+    </div>
+
+    <!-- Parent Gate Modal -->
+    <div id="parent-modal" class="modal-overlay">
+        <div class="modal-card">
+            <h3>Area Orang Tua</h3>
+            <p>Untuk masuk, jawab pertanyaan ini:</p>
+            <h2 id="parent-math-question" style="color:var(--primary-blue)">2 + 3 = ?</h2>
+            <input type="number" id="parent-math-input">
+            <div style="margin-top: 1rem; display: flex; gap: 10px; justify-content: center;">
+                <button class="btn-primary" onclick="checkParentGate()"
+                    style="font-size: 1rem; padding: 0.5rem 1rem;">Masuk</button>
+                <button class="btn-secondary" onclick="closeParentGate()"
+                    style="background: white; color: #555; font-size: 1rem; padding: 0.5rem 1rem; box-shadow:none; border: 1px solid #ddd;">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
