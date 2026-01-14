@@ -158,12 +158,64 @@ const playSound = (type) => {
     // For now, we rely on Speech for "Baguss!" or "Coba lagi ya"
 };
 
+// Audio Engine (Web Audio API)
+const AudioEngine = {
+    ctx: null,
+    init() {
+        if (!this.ctx) {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+        }
+    },
+    playTone(freq, duration, type = 'triangle') {
+        if (!this.ctx) this.init();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+
+        gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start();
+        osc.stop(this.ctx.currentTime + duration);
+    },
+    playMelody(notes, speed = 1.0) {
+        let time = 0;
+        notes.forEach(n => {
+            if (n.note) { // If not a rest
+                const freq = this.getFreq(n.note);
+                setTimeout(() => {
+                    this.playTone(freq, n.dur * speed * 0.9); // Slight staccato
+                }, time * 1000);
+            }
+            time += n.dur * speed;
+        });
+    },
+    getFreq(note) {
+        const notes = {
+            'C4': 261.63, 'D4': 293.66, 'E4': 329.63, 'F4': 349.23, 'G4': 392.00, 'A4': 440.00, 'B4': 493.88,
+            'C5': 523.25, 'D5': 587.33, 'E5': 659.25, 'F5': 698.46, 'G5': 783.99
+        };
+        return notes[note] || 0;
+    }
+};
+
 // Initialization
 function init() {
     loadProgress();
     setupNavigation();
     updateStarDisplay();
     mascot.init();
+
+    // Init Audio Context on first click anywhere
+    document.body.addEventListener('click', () => AudioEngine.init(), { once: true });
 }
 
 
@@ -1877,6 +1929,25 @@ function initSingingLevel(level, container) {
     const SONG_LIBRARY = [
         {
             title: "Balonku Ada Lima 🎈",
+            // Melody: E G G E G G C ...
+            melody: [
+                // Ba-lon-ku a-da li-ma
+                { n: 'E4', d: 0.3 }, { n: 'G4', d: 0.3 }, { n: 'G4', d: 0.3 }, { n: 'E4', d: 0.3 }, { n: 'G4', d: 0.4 }, { n: 'G4', d: 0.4 }, { n: 'C4', d: 0.8 },
+                // Ru-pa ru-pa war-na-nya
+                { n: 'E4', d: 0.3 }, { n: 'E4', d: 0.3 }, { n: 'C4', d: 0.3 }, { n: 'E4', d: 0.3 }, { n: 'G4', d: 0.4 }, { n: 'F4', d: 0.4 }, { n: 'E4', d: 0.4 }, { n: 'D4', d: 0.8 },
+                // Hi-jau ku-ning ke-la-bu
+                { n: 'D4', d: 0.3 }, { n: 'F4', d: 0.3 }, { n: 'F4', d: 0.3 }, { n: 'D4', d: 0.3 }, { n: 'F4', d: 0.4 }, { n: 'F4', d: 0.4 }, { n: 'E4', d: 0.4 }, { n: 'D4', d: 0.4 },
+                // Me-rah mu-da dan bi-ru
+                { n: 'G4', d: 0.3 }, { n: 'G4', d: 0.3 }, { n: 'F4', d: 0.3 }, { n: 'E4', d: 0.4 }, { n: 'D4', d: 0.4 }, { n: 'C4', d: 0.8 },
+                // Me-le-tus ba-lon hi-jau.. DOR!
+                { n: 'C4', d: 0.3 }, { n: 'G4', d: 0.3 }, { n: 'G4', d: 0.3 }, { n: 'E4', d: 0.3 }, { n: 'G4', d: 0.4 }, { n: 'G4', d: 0.4 }, { n: 'C5', d: 0.6 }, { n: 'G4', d: 0.2 },
+                // Ha-ti-ku sa-ngat ka-cau
+                { n: 'C5', d: 0.3 }, { n: 'G4', d: 0.3 }, { n: 'E4', d: 0.3 }, { n: 'C4', d: 0.3 }, { n: 'E4', d: 0.4 }, { n: 'G4', d: 0.4 }, { n: 'F4', d: 0.8 },
+                // Ba-lon-ku ting-gal em-pat
+                { n: 'D4', d: 0.3 }, { n: 'F4', d: 0.3 }, { n: 'G4', d: 0.3 }, { n: 'B4', d: 0.3 }, { n: 'B4', d: 0.4 }, { n: 'A4', d: 0.4 }, { n: 'G4', d: 0.4 }, { n: 'F4', d: 0.4 },
+                // Ku-pe-gang e-rat e-rat
+                { n: 'E4', d: 0.3 }, { n: 'G4', d: 0.3 }, { n: 'F4', d: 0.3 }, { n: 'D4', d: 0.3 }, { n: 'C4', d: 1.0 }
+            ],
             lyrics: [
                 { text: "Balonku ada lima", duration: 3000 },
                 { text: "Rupa-rupa warnanya", duration: 3000 },
