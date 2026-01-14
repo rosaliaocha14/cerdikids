@@ -128,7 +128,7 @@ const parentMathQuestion = document.getElementById('parent-math-question');
 const parentMathInput = document.getElementById('parent-math-input');
 
 // Sound Effects (Web Speech API)
-const speak = (text) => {
+const speak = (text, options = {}) => {
     if (!state.soundEnabled) return;
 
     // Cancel previous to avoid queue buildup
@@ -146,8 +146,8 @@ const speak = (text) => {
         utterance.lang = 'id-ID'; // Fallback attempt
     }
 
-    utterance.rate = 0.9;
-    utterance.pitch = 1.1;
+    utterance.rate = options.rate || 0.9;
+    utterance.pitch = options.pitch || 1.1;
     utterance.volume = 1.0; // Ensure max volume
 
     window.speechSynthesis.speak(utterance);
@@ -1873,19 +1873,19 @@ function showSingingGameMenu(container) {
 function initSingingLevel(level, container) {
     container.innerHTML = '';
 
-    // Song Data (Expanded Library)
+    // Song Data (Refined for Rhythm)
     const SONG_LIBRARY = [
         {
             title: "Balonku Ada Lima 🎈",
             lyrics: [
-                { text: "Balonku ada lima", duration: 2000 },
-                { text: "Rupa-rupa warnanya", duration: 2000 },
-                { text: "Hijau kuning kelabu", duration: 2000 },
-                { text: "Merah muda dan biru", duration: 2000 },
-                { text: "Meletus balon hijau.. DOR!", duration: 2500 },
-                { text: "Hatiku sangat kacau", duration: 2000 },
-                { text: "Balonku tinggal empat", duration: 2000 },
-                { text: "Kupegang erat-erat", duration: 2000 }
+                { text: "Balonku ada lima", duration: 3000 },
+                { text: "Rupa-rupa warnanya", duration: 3000 },
+                { text: "Hijau kuning kelabu", duration: 2500 },
+                { text: "Merah muda dan biru", duration: 2500 },
+                { text: "Meletus balon hijau.. DOR!", duration: 3000, pitch: 1.3 },
+                { text: "Hatiku sangat kacau", duration: 2500 },
+                { text: "Balonku tinggal empat", duration: 2500 },
+                { text: "Kupegang erat-erat", duration: 3000 }
             ],
             quiz: {
                 question: "Apa warna balon yang meletus?",
@@ -1897,14 +1897,14 @@ function initSingingLevel(level, container) {
         {
             title: "Pelangi-Pelangi 🌈",
             lyrics: [
-                { text: "Pelangi-pelangi", duration: 2000 },
-                { text: "Alangkah indahmu", duration: 2000 },
-                { text: "Merah kuning hijau", duration: 2000 },
+                { text: "Pelangi-pelangi", duration: 2500 },
+                { text: "Alangkah indahmu", duration: 2500 },
+                { text: "Merah kuning hijau", duration: 2500 },
                 { text: "Di langit yang biru", duration: 2000 },
                 { text: "Pelukismu agung", duration: 2000 },
                 { text: "Siapa gerangan", duration: 2000 },
-                { text: "Pelangi-pelangi", duration: 2000 },
-                { text: "Ciptaan Tuhan", duration: 2000 }
+                { text: "Pelangi-pelangi", duration: 2500 },
+                { text: "Ciptaan Tuhan", duration: 3000 }
             ],
             quiz: {
                 question: "Apa warna pelangi di lagu tadi?",
@@ -1917,11 +1917,11 @@ function initSingingLevel(level, container) {
             title: "Bintang Kecil ✨",
             lyrics: [
                 { text: "Bintang kecil", duration: 2000 },
-                { text: "Di langit yang biru", duration: 2000 },
+                { text: "Di langit yang biru", duration: 2500 },
                 { text: "Amat banyak", duration: 2000 },
-                { text: "Menghias angkasa", duration: 2000 },
+                { text: "Menghias angkasa", duration: 2500 },
                 { text: "Aku ingin", duration: 2000 },
-                { text: "Terbang dan menari", duration: 2000 },
+                { text: "Terbang dan menari", duration: 2500 },
                 { text: "Jauh tinggi", duration: 2000 },
                 { text: "Ke tempat kau berada", duration: 3000 }
             ],
@@ -1935,14 +1935,14 @@ function initSingingLevel(level, container) {
         {
             title: "Satu-Satu Aku Sayang Ibu 👪",
             lyrics: [
-                { text: "Satu-satu", duration: 1500 },
-                { text: "Aku sayang ibu", duration: 1500 },
-                { text: "Dua-dua", duration: 1500 },
-                { text: "Juga sayang ayah", duration: 1500 },
-                { text: "Tiga-tiga", duration: 1500 },
-                { text: "Sayang adik kakak", duration: 1500 },
-                { text: "Satu dua tiga", duration: 1500 },
-                { text: "Sayang semuanya", duration: 2000 }
+                { text: "Satu-satu", duration: 2000 },
+                { text: "Aku sayang ibu", duration: 2000 },
+                { text: "Dua-dua", duration: 2000 },
+                { text: "Juga sayang ayah", duration: 2000 },
+                { text: "Tiga-tiga", duration: 2000 },
+                { text: "Sayang adik kakak", duration: 2000 },
+                { text: "Satu dua tiga", duration: 2500 },
+                { text: "Sayang semuanya", duration: 3000 }
             ],
             quiz: {
                 question: "Siapa yang disayang nomor satu?",
@@ -1954,12 +1954,12 @@ function initSingingLevel(level, container) {
         {
             title: "A B C 🔤",
             lyrics: [
-                { text: "A B C D E F G", duration: 2000 },
-                { text: "H I J K L M N", duration: 2000 },
-                { text: "O P Q R S T U", duration: 2000 },
-                { text: "V W X Y Z", duration: 2000 },
-                { text: "Sekarang aku tahu", duration: 2000 },
-                { text: "Apa itu A B C", duration: 2000 }
+                { text: "A B C D E F G", duration: 3000 },
+                { text: "H I J K L M N", duration: 3000 },
+                { text: "O P Q R S T U", duration: 3000 },
+                { text: "V W X Y Z", duration: 3000 },
+                { text: "Sekarang aku tahu", duration: 2500 },
+                { text: "Apa itu A B C", duration: 2500 }
             ],
             quiz: {
                 question: "Huruf apa setelah A?",
@@ -1971,12 +1971,12 @@ function initSingingLevel(level, container) {
         {
             title: "Sepuluh Anak Ayam 🐣",
             lyrics: [
-                { text: "Tek kotek kotek kotek", duration: 2000 },
-                { text: "Anak ayam turun berkotek", duration: 2000 },
-                { text: "Anak ayam turunlah sepuluh", duration: 2000 },
-                { text: "Mati satu tinggallah sembilan", duration: 2000 },
-                { text: "Anak ayam turunlah sembilan", duration: 2000 },
-                { text: "Mati satu tinggallah delapan", duration: 2000 }
+                { text: "Tek kotek kotek kotek", duration: 2500 },
+                { text: "Anak ayam turun berkotek", duration: 2500 },
+                { text: "Anak ayam turunlah sepuluh", duration: 2500 },
+                { text: "Mati satu tinggallah sembilan", duration: 2500 },
+                { text: "Anak ayam turunlah sembilan", duration: 2500 },
+                { text: "Mati satu tinggallah delapan", duration: 2500 }
             ],
             quiz: {
                 question: "Suara anak ayam bagaimana?",
@@ -1988,10 +1988,10 @@ function initSingingLevel(level, container) {
         {
             title: "Topi Saya Bundar 🎩",
             lyrics: [
-                { text: "Topi saya bundar", duration: 2000 },
-                { text: "Bundar topi saya", duration: 2000 },
-                { text: "Kalau tidak bundar", duration: 2000 },
-                { text: "Bukan topi saya", duration: 2000 }
+                { text: "Topi saya bundar", duration: 2500 },
+                { text: "Bundar topi saya", duration: 2500 },
+                { text: "Kalau tidak bundar", duration: 2500 },
+                { text: "Bukan topi saya", duration: 2500 }
             ],
             quiz: {
                 question: "Bagaimana bentuk topi saya?",
@@ -2003,12 +2003,12 @@ function initSingingLevel(level, container) {
         {
             title: "Naik Kereta Api 🚂",
             lyrics: [
-                { text: "Naik kereta api ... tut ... tut ... tut", duration: 2500 },
+                { text: "Naik kereta api ... tut ... tut ... tut", duration: 4000 },
                 { text: "Siapa hendak turut", duration: 2000 },
-                { text: "Ke Bandung ... Surabaya", duration: 2000 },
-                { text: "Bolehlah naik dengan percuma", duration: 2000 },
-                { text: "Ayo kawanku lekas naik", duration: 2000 },
-                { text: "Keretaku tak berhenti lama", duration: 2000 }
+                { text: "Ke Bandung ... Surabaya", duration: 3000 },
+                { text: "Bolehlah naik dengan percuma", duration: 3000 },
+                { text: "Ayo kawanku lekas naik", duration: 2500 },
+                { text: "Keretaku tak berhenti lama", duration: 3000 }
             ],
             quiz: {
                 question: "Kereta api bunyinya bagaimana?",
@@ -2020,10 +2020,10 @@ function initSingingLevel(level, container) {
         {
             title: "Cicak di Dinding 🦎",
             lyrics: [
-                { text: "Cicak-cicak di dinding", duration: 2000 },
-                { text: "Diam-diam merayap", duration: 2000 },
-                { text: "Datang seekor nyamuk", duration: 2000 },
-                { text: "Hap ... lalu ditangkap", duration: 2000 }
+                { text: "Cicak-cicak di dinding", duration: 3000 },
+                { text: "Diam-diam merayap", duration: 3000 },
+                { text: "Datang seekor nyamuk", duration: 3000 },
+                { text: "Hap ... lalu ditangkap", duration: 3000 }
             ],
             quiz: {
                 question: "Apa yang ditangkap cicak?",
@@ -2035,10 +2035,10 @@ function initSingingLevel(level, container) {
         {
             title: "Bangun Tidur 🛌",
             lyrics: [
-                { text: "Bangun tidur kuterus mandi", duration: 2000 },
-                { text: "Tidak lupa menggosok gigi", duration: 2000 },
-                { text: "Habis mandi kutolong ibu", duration: 2000 },
-                { text: "Membersihkan tempat tidurku", duration: 2000 }
+                { text: "Bangun tidur kuterus mandi", duration: 2500 },
+                { text: "Tidak lupa menggosok gigi", duration: 2500 },
+                { text: "Habis mandi kutolong ibu", duration: 2500 },
+                { text: "Membersihkan tempat tidurku", duration: 2500 }
             ],
             quiz: {
                 question: "Habis mandi tolong siapa?",
